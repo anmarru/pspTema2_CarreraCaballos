@@ -2,6 +2,7 @@ package tema2;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -73,28 +74,33 @@ public class CarreraController implements ChangeListener<Object>{
     @Override
     public void changed(ObservableValue<? extends Object>  observable, Object oldValue, Object newValue) {
 
-        if(!carreraTerminada){
-            carreraTerminada = true;
+        //if(!carreraTerminada){
+            //carreraTerminada = true;
 
             //que caballo termina
-            Caballo ganador= (Caballo)((ObservableValue<?>) observable).getValue();
-            mensajes.setText("Caballo "+ ganador.getNombre()+" ha ganado ");
+            //Caballo ganador= (Caballo)((ObservableValue<?>) observable).getValue();
+            //mensajes.setText("Caballo "+ ganador.getNombre()+" ha ganado ");
 
-            if(tc1 !=null && tc1.isAlive()){
+            //if(tc1 !=null && tc1.isAlive()){
                 tc1.interrupt();
-            }
-            if(tc2 !=null && tc2.isAlive()){
+            //}
+            //if(tc2 !=null && tc2.isAlive()){
                 tc2.interrupt();
-            }
-            if(tc3 !=null && tc3.isAlive()){
+           // }
+            //if(tc3 !=null && tc3.isAlive()){
                 tc3.interrupt();
-            }
-            if(tc4 !=null && tc4.isAlive()){
+           // }
+            //if(tc4 !=null && tc4.isAlive()){
                 tc4.interrupt();
-            }
+           // }
 
             iniciarButton.setDisable(false);
-        }
+
+            Platform.runLater(() -> {
+                mensajes.setText("Final");
+            });
+            
+       // }
         
     }
     
