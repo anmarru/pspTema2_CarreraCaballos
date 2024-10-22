@@ -47,60 +47,61 @@ public class CarreraController implements ChangeListener<Object>{
         caballo.getTerminadoProperty().addListener(this);
         progresoCaballo1.progressProperty().bind(caballo.getValorProperty());
         tc1=new Thread(caballo);
-        tc1.start();
-
-    
+       
         Caballo caballo2=new Caballo("2");
         caballo2.getTerminadoProperty().addListener(this);
         progresoCaballo2.progressProperty().bind(caballo2.getValorProperty());
         tc2 = new Thread(caballo2);
-        tc2.start();
-
         
         Caballo caballo3=new Caballo("3");
         caballo3.getTerminadoProperty().addListener(this);
         progresoCaballo3.progressProperty().bind(caballo3.getValorProperty());
         tc3=new Thread(caballo3);
-        tc3.start();
-
         
         Caballo caballo4=new Caballo("4");
         caballo4.getTerminadoProperty().addListener(this);
         progresoCaballo4.progressProperty().bind(caballo4.getValorProperty());
         tc4=new Thread(caballo4);
+
+        tc3.start();
+        tc2.start();
+        tc1.start();
         tc4.start();
+
         
     }
     @Override
     public void changed(ObservableValue<? extends Object>  observable, Object oldValue, Object newValue) {
 
-        //if(!carreraTerminada){
-            //carreraTerminada = true;
+            if(!carreraTerminada){
+                carreraTerminada=true;
+            }
 
-            //que caballo termina
-            //Caballo ganador= (Caballo)((ObservableValue<?>) observable).getValue();
-            //mensajes.setText("Caballo "+ ganador.getNombre()+" ha ganado ");
-
-            //if(tc1 !=null && tc1.isAlive()){
                 tc1.interrupt();
-            //}
-            //if(tc2 !=null && tc2.isAlive()){
                 tc2.interrupt();
-           // }
-            //if(tc3 !=null && tc3.isAlive()){
                 tc3.interrupt();
-           // }
-            //if(tc4 !=null && tc4.isAlive()){
                 tc4.interrupt();
-           // }
+            
+                String nombreCaballoGanador="";
+                
+                if (progresoCaballo1.getProgress() == 1.0) {
+                    nombreCaballoGanador = "Caballo 1";
+                } else if (progresoCaballo2.getProgress() == 1.0) {
+                    nombreCaballoGanador = "Caballo 2";
+                } else if (progresoCaballo3.getProgress() == 1.0) {
+                    nombreCaballoGanador = "Caballo 3";
+                } else if (progresoCaballo4.getProgress() == 1.0) {
+                    nombreCaballoGanador = "Caballo 4";
+                }
 
-            iniciarButton.setDisable(false);
+                String caballoGanador= nombreCaballoGanador;
 
             Platform.runLater(() -> {
-                mensajes.setText("Final");
+                mensajes.setText("ganador : "+ caballoGanador);
             });
             
-       // }
+            iniciarButton.setDisable(false);
+
         
     }
     
